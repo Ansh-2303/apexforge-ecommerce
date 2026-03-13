@@ -1,0 +1,345 @@
+/* ===============================
+   PAGE
+================================ */
+
+.addresses-page{
+  padding:60px 20px;
+}
+
+.addresses-container{
+  max-width:720px;
+  margin:0 auto;
+}
+
+
+/* ===============================
+   TITLE
+================================ */
+
+.addresses-title{
+  font-size:32px;
+  margin-bottom:30px;
+  font-weight:700;
+  letter-spacing:.3px;
+}
+
+
+/* ===============================
+   FORM CARD
+================================ */
+
+.address-form-card{
+
+  background:rgba(255,255,255,0.03);
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  border-radius:16px;
+
+  padding:28px;
+
+  margin-bottom:40px;
+
+  backdrop-filter:blur(10px);
+
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+
+  transition:.25s;
+}
+
+.address-form-card:hover{
+  transform:translateY(-2px);
+}
+
+
+/* ===============================
+   FORM
+================================ */
+
+.address-form{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+
+/* ===============================
+   INPUTS
+================================ */
+
+.address-form input{
+
+  width:100%;
+  box-sizing:border-box;
+
+  padding:14px 16px;
+
+  border-radius:12px;
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  background:rgba(255,255,255,0.03);
+
+  color:white;
+
+  font-size:14px;
+
+  transition:all .2s ease;
+}
+
+.address-form input::placeholder{
+  color:rgba(255,255,255,.45);
+}
+
+.address-form input:focus{
+  outline:none;
+
+  border-color:#4f8cff;
+
+  box-shadow:0 0 0 2px rgba(79,140,255,.18);
+}
+
+
+/* ===============================
+   CHECKBOX ROW
+================================ */
+
+.default-checkbox{
+
+  display:flex;
+  align-items:center;
+
+  gap:10px;
+
+  margin-top:10px;
+
+  font-size:14px;
+
+  color:rgba(255,255,255,.85);
+}
+
+.default-checkbox input{
+
+  width:16px;
+  height:16px;
+
+  accent-color:#4f8cff;
+
+  cursor:pointer;
+}
+
+
+/* ===============================
+   ADD ADDRESS BUTTON
+================================ */
+
+.add-address-btn{
+
+  width:100%;
+
+  margin-top:16px;
+
+  padding:14px;
+
+  border:none;
+
+  border-radius:12px;
+
+  font-size:15px;
+  font-weight:600;
+
+  cursor:pointer;
+
+  background:linear-gradient(
+    90deg,
+    #4f8cff,
+    #2c66e0
+  );
+
+  color:white;
+
+  transition:all .2s ease;
+}
+
+.add-address-btn:hover{
+
+  transform:translateY(-1px);
+
+  box-shadow:0 8px 26px rgba(79,140,255,.35);
+}
+
+
+/* ===============================
+   SAVED ADDRESSES TITLE
+================================ */
+
+.saved-title{
+  margin-bottom:18px;
+  font-size:20px;
+  font-weight:600;
+}
+
+
+/* ===============================
+   ADDRESS CARD
+================================ */
+
+.address-card{
+
+  background:rgba(255,255,255,0.03);
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  border-radius:16px;
+
+  padding:22px;
+
+  margin-bottom:20px;
+
+  backdrop-filter:blur(10px);
+
+  transition:all .25s ease;
+}
+
+.address-card:hover{
+
+  transform:translateY(-3px);
+
+  box-shadow:0 16px 40px rgba(0,0,0,.35);
+}
+
+
+/* ===============================
+   DEFAULT CARD
+================================ */
+
+.address-card.default{
+
+  border-color:#4f8cff;
+
+  box-shadow:0 0 0 1px rgba(79,140,255,.25);
+}
+
+
+/* ===============================
+   CARD HEADER
+================================ */
+
+.address-header{
+
+  display:flex;
+
+  align-items:center;
+
+  gap:10px;
+
+  margin-bottom:12px;
+
+  font-weight:600;
+}
+
+
+/* ===============================
+   DEFAULT BADGE
+================================ */
+
+.default-badge{
+
+  padding:4px 10px;
+
+  border-radius:999px;
+
+  font-size:12px;
+
+  font-weight:600;
+
+  background:rgba(79,140,255,.15);
+
+  color:#4f8cff;
+}
+
+
+/* ===============================
+   ADDRESS TEXT
+================================ */
+
+.address-card p{
+  margin:4px 0;
+  opacity:.85;
+  font-size:14px;
+}
+
+
+/* ===============================
+   CARD BUTTONS
+================================ */
+
+.address-buttons{
+  margin-top:16px;
+  display:flex;
+  gap:10px;
+}
+
+.address-buttons button{
+
+  padding:8px 14px;
+
+  border-radius:8px;
+
+  border:1px solid rgba(255,255,255,0.15);
+
+  background:transparent;
+
+  color:white;
+
+  font-size:13px;
+
+  cursor:pointer;
+
+  transition:all .2s ease;
+}
+
+/* SET DEFAULT */
+
+.address-buttons button:first-child:hover{
+
+  border-color:#4f8cff;
+
+  background:rgba(79,140,255,.12);
+
+  color:#4f8cff;
+}
+
+
+/* DELETE */
+
+.address-buttons button:last-child:hover{
+
+  border-color:#ff5c5c;
+
+  background:rgba(255,92,92,.12);
+
+  color:#ff5c5c;
+}
+
+.address-buttons button:hover{
+
+  background:rgba(255,255,255,0.06);
+}
+
+
+/* ===============================
+   MOBILE
+================================ */
+
+@media (max-width:600px){
+
+  .addresses-title{
+    font-size:26px;
+  }
+
+  .address-form-card{
+    padding:22px;
+  }
+
+}

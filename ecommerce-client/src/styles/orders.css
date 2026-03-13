@@ -1,0 +1,187 @@
+/* ===============================
+   PAGE TITLE
+================================ */
+
+.orders-title{
+  margin-bottom:2.8rem;
+  font-size:2rem;
+  font-weight:700;
+}
+
+
+/* ===============================
+   GRID
+================================ */
+
+.orders-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:2rem;
+}
+
+@media(max-width:1100px){
+  .orders-grid{
+    grid-template-columns:repeat(2,1fr);
+  }
+}
+
+@media(max-width:700px){
+  .orders-grid{
+    grid-template-columns:1fr;
+  }
+}
+
+
+/* ===============================
+   CARD
+================================ */
+
+.order-card{
+  background:rgba(255,255,255,0.03);
+
+  border:1px solid rgba(255,255,255,0.08);
+
+  border-radius:16px;
+
+  padding:1.8rem;
+
+  backdrop-filter:blur(10px);
+
+  box-shadow:0 12px 30px rgba(0,0,0,.35);
+
+  display:flex;
+  flex-direction:column;
+  gap:1.2rem;
+
+  transition:all .25s ease;
+}
+.order-card:hover{
+  transform:translateY(-6px);
+  box-shadow:
+    0 20px 45px rgba(0,0,0,.45),
+    0 0 0 1px rgba(79,140,255,0.15);
+}
+
+/* ===============================
+   CARD TOP
+================================ */
+
+.order-card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+}
+
+.order-id{
+  font-weight:700;
+  font-size:.95rem;
+  opacity:.75;
+}
+
+
+/* ===============================
+   ORDER INFO
+================================ */
+
+.order-info{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+}
+
+.order-row{
+  display:flex;
+  justify-content:space-between;
+  font-size:14px;
+}
+
+.order-row span:first-child{
+  opacity:.65;
+}
+
+.order-row strong{
+  font-weight:600;
+}
+
+
+/* ===============================
+   STATUS BADGE
+================================ */
+
+.order-status{
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:11px;
+  font-weight:600;
+  text-transform:capitalize;
+}
+
+.order-status.pending{
+  background:#fff5e6;
+  color:#d97706;
+}
+
+.order-status.paid{
+  background:#e6f9f0;
+  color:#059669;
+}
+
+.order-status.processing{
+  background:#e6f0ff;
+  color:#2563eb;
+}
+
+.order-status.shipped{
+  background:#f3e8ff;
+  color:#7c3aed;
+}
+
+.order-status.delivered{
+  background:#ecfdf5;
+  color:#10b981;
+}
+
+.order-status.cancelled{
+  background:#ffe6e6;
+  color:#dc2626;
+}
+
+
+/* ===============================
+   BUTTON
+================================ */
+
+.order-view-btn{
+  margin-top:6px;
+  align-self:flex-start;
+}
+
+
+/* ===============================
+   EMPTY STATE
+================================ */
+
+.empty-state{
+  text-align:center;
+  padding:5rem 0;
+}
+
+.empty-state h2{
+  margin-bottom:1rem;
+}
+
+.empty-state p{
+  margin-bottom:2rem;
+  opacity:.7;
+}
+.order-status.paid{
+  background:#e6f9f0;
+  color:#059669;
+  box-shadow:0 0 0 2px rgba(16,185,129,0.15);
+}
+
+.order-status.pending{
+  background:#fff5e6;
+  color:#d97706;
+  box-shadow:0 0 0 2px rgba(217,119,6,0.15);
+}

@@ -1,0 +1,1 @@
+MONGO_URI=mongodb+srv://test:test@cluster0.szkko4c.mongodb.net/e_comm?retryWrites=true&w=majority

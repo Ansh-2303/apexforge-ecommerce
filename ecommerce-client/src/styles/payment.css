@@ -1,0 +1,251 @@
+/* =================================
+   PAYMENT PAGE — APEXFORGE PRO
+================================= */
+
+/* =================================
+   PAYMENT PAGE — APEXFORGE PRO
+================================= */
+
+:root {
+  --bg-darkest: #040914;      
+  --bg-medium: #0B1221;       
+  --bg-light: #151F32;        
+  --border-subtle: rgba(255, 255, 255, 0.05);
+  --border-light: rgba(255, 255, 255, 0.1);
+  --neon-glow: rgba(34, 197, 94, 0.15);
+  --neon-glow-strong: rgba(34, 197, 94, 0.4);
+  --accent-green: #22c55e;
+  --error-red: #ef4444;
+}
+
+/* --- Loading State --- */
+.payment-loading {
+  min-height: calc(100vh - 100px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  color: #94a3b8;
+  font-family: monospace;
+}
+
+.spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-light);
+  border-top-color: var(--accent-green);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  box-shadow: 0 0 15px var(--neon-glow);
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* --- Main Layout --- */
+.payment-section {
+  padding: 40px 20px;
+  min-height: calc(100vh - 100px); /* Ensures it takes up the screen height */
+  display: flex;
+  justify-content: center;
+  align-items: center; /* Changed to center to float it perfectly in the middle */
+  color: #e2e8f0;
+}
+
+.payment-container {
+  width: 100%;
+  max-width: 460px; /* REDUCED from 550px for a tighter, premium feel */
+  background: var(--bg-medium);
+  border-radius: 24px;
+  border: 1px solid var(--border-subtle);
+  padding: 32px; /* REDUCED from 40px */
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5);
+  animation: slideUp 0.4s ease-out forwards;
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* --- Order ID Header --- */
+.order-header {
+  background: var(--bg-light);
+  padding: 16px 20px; /* REDUCED padding */
+  border-radius: 16px;
+  border: 1px solid var(--border-light);
+  margin-bottom: 24px; /* REDUCED margin */
+  text-align: center;
+}
+
+.order-header p {
+  font-size: 0.8rem;
+  color: #94a3b8;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.order-header h3 {
+  font-size: 1.05rem;
+  color: var(--accent-green);
+  font-family: monospace;
+  letter-spacing: 0.5px;
+  text-shadow: 0 0 10px var(--neon-glow);
+}
+
+/* --- Payment Methods --- */
+.payment-methods {
+  display: flex;
+  flex-direction: column;
+  gap: 14px; /* Slightly tighter gap */
+  margin-bottom: 24px;
+}
+
+.payment-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 16px; /* Tighter gap between radio and text */
+  padding: 18px 20px; /* REDUCED padding */
+  border-radius: 16px;
+  background: var(--bg-light);
+  border: 2px solid var(--border-subtle);
+  cursor: pointer;
+  transition: all 0.25s ease;
+  overflow: hidden;
+}
+
+/* Keep the rest of your CSS below this exactly the same! */
+
+.payment-card:hover:not(.disabled) {
+  transform: translateY(-3px);
+  border-color: rgba(34, 197, 94, 0.4);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+}
+
+.payment-card.active {
+  border-color: var(--accent-green);
+  background: linear-gradient(145deg, #152238, var(--bg-medium));
+  box-shadow: 0 0 0 1px var(--accent-green), 0 10px 30px rgba(0,0,0,0.6), 0 0 20px var(--neon-glow);
+}
+
+.payment-card.disabled {
+  opacity: 0.6;
+}
+
+/* --- Custom Radio Button --- */
+.custom-radio {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  background: var(--bg-medium);
+}
+
+.payment-card.active .custom-radio {
+  border-color: var(--accent-green);
+}
+
+.payment-card.active .custom-radio::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-green);
+  box-shadow: 0 0 8px var(--accent-green);
+}
+
+/* --- Text Content --- */
+.payment-info {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.payment-info h4 {
+  font-size: 1.05rem;
+  color: #f8fafc;
+  margin: 0;
+}
+
+.payment-info p {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  margin: 0;
+  line-height: 1.4;
+}
+
+/* --- Coming Soon Badge --- */
+.badge-soon {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  color: #94a3b8;
+  font-size: 0.7rem;
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid var(--border-light);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* --- Errors & Buttons --- */
+.payment-error {
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: var(--error-red);
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  margin-bottom: 25px;
+  text-align: center;
+}
+
+.btn-confirm {
+  width: 100%;
+  padding: 18px;
+  border: none;
+  border-radius: 14px;
+  background: var(--accent-green);
+  color: #04130a;
+  font-weight: 700;
+  font-size: 1.05rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 0 20px var(--neon-glow-strong);
+  margin-bottom: 20px;
+}
+
+.btn-confirm:hover:not(:disabled) {
+  transform: translateY(-2px);
+  background: #24d366; 
+  box-shadow: 0 8px 25px var(--neon-glow-strong);
+}
+
+.btn-confirm:disabled {
+  background: #1e293b;
+  color: #64748b;
+  box-shadow: none;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.secure-footer {
+  text-align: center;
+  font-size: 0.8rem;
+  color: #64748b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}   

@@ -1,0 +1,12 @@
+// UserName : hymn60407_db_user
+// Pswd : H9o7KCAmjPWb4l43
+
+// mongodb+srv://hymn60407_db_user:H9o7KCAmjPWb4l43@cluster0.szkko4c.mongodb.net/
+
+hymn60407@gmail.xom
+
+
+test 
+test
+cluster password
+

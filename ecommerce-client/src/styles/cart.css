@@ -1,0 +1,556 @@
+/* =================================
+   CART PAGE — APEXFORGE STYLE
+================================= */
+
+.cart-title{
+font-size:2rem;
+font-weight:700;
+margin-bottom:25px;
+letter-spacing:-0.4px;
+}
+
+/* =================================
+   SHIPPING PROGRESS
+================================= */
+
+.shipping-progress{
+margin-bottom:30px;
+}
+
+.shipping-progress p{
+font-size:13px;
+margin-bottom:8px;
+color:var(--color-text-muted);
+}
+
+.progress-bar{
+height:6px;
+border-radius:999px;
+background:#1f2937;
+overflow:hidden;
+}
+
+.progress-fill{
+height:100%;
+background:linear-gradient(90deg,#22c55e,#4ade80);
+box-shadow:0 0 14px rgba(34,197,94,.4);
+transition:width .6s ease;
+}
+
+/* =================================
+   LAYOUT
+================================= */
+
+.cart-layout{
+display:grid;
+grid-template-columns:2fr 1fr;
+gap:40px;
+align-items:start;
+}
+
+@media(max-width:900px){
+.cart-layout{
+grid-template-columns:1fr;
+}
+}
+
+/* =================================
+   HEADER
+================================= */
+
+.cart-header{
+display:grid;
+grid-template-columns:100px 1fr 120px 90px;
+padding:0 24px;
+margin-bottom:16px;
+font-size:.75rem;
+letter-spacing:.08em;
+text-transform:uppercase;
+color:var(--color-text-muted);
+}
+
+/* =================================
+   CART ITEMS
+================================= */
+
+.cart-items{
+display:flex;
+flex-direction:column;
+gap:20px;
+}
+
+/* =================================
+   ITEM CARD
+================================= */
+
+.cart-item{
+
+background:linear-gradient(145deg,#0b1a33,#081425);
+
+border-radius:18px;
+border:1px solid rgba(255,255,255,.05);
+
+padding:24px;
+
+display:grid;
+grid-template-columns:90px 1fr 120px 100px;
+align-items:center;
+gap:20px;
+
+transition:
+transform .25s ease,
+box-shadow .25s ease,
+border-color .25s ease;
+
+box-shadow:0 10px 35px rgba(0,0,0,.45);
+
+}
+
+.cart-item:hover{
+
+transform:translateY(-5px);
+
+border-color:rgba(34,197,94,.35);
+
+box-shadow:
+0 20px 50px rgba(0,0,0,.5),
+0 0 25px rgba(34,197,94,.18);
+
+}
+
+/* =================================
+   IMAGE
+================================= */
+
+.cart-image{
+width:90px;
+height:90px;
+border-radius:12px;
+overflow:hidden;
+background:#0f172a;
+}
+
+.cart-image img{
+width:100%;
+height:100%;
+object-fit:cover;
+transition:transform .25s ease;
+}
+
+.cart-item:hover .cart-image img{
+transform:scale(1.05);
+}
+
+/* =================================
+   PRODUCT INFO
+================================= */
+
+.cart-item-info h3{
+font-size:1.05rem;
+font-weight:600;
+margin-bottom:6px;
+}
+
+.cart-item-info p{
+font-size:.82rem;
+color:var(--color-text-muted);
+}
+
+/* =================================
+   QUANTITY
+================================= */
+
+.cart-quantity{
+display:flex;
+align-items:center;
+gap:10px;
+margin-top:10px;
+}
+
+.cart-quantity span{
+font-weight:700;
+min-width:22px;
+text-align:center;
+}
+
+.cart-quantity button{
+
+width:36px;
+height:36px;
+
+border-radius:10px;
+
+border:1px solid rgba(255,255,255,.12);
+background:rgba(255,255,255,.04);
+
+color:white;
+
+font-size:16px;
+font-weight:700;
+
+cursor:pointer;
+
+transition:all .2s ease;
+
+}
+
+.cart-quantity button:hover{
+
+background:var(--color-accent);
+border-color:var(--color-accent);
+color:#04130a;
+
+box-shadow:0 0 12px rgba(34,197,94,.35);
+
+}
+
+/* =================================
+   ITEM SUBTOTAL
+================================= */
+
+.item-subtotal{
+margin-top:6px;
+font-size:.8rem;
+color:var(--color-text-muted);
+}
+
+/* =================================
+   PRICE
+================================= */
+
+.cart-item-total{
+
+font-size:1.1rem;
+font-weight:700;
+
+color:var(--color-accent);
+
+text-shadow:0 0 10px rgba(34,197,94,.45);
+
+text-align:center;
+
+animation:pricePulse .35s ease;
+
+}
+
+/* =================================
+   REMOVE BUTTON
+================================= */
+
+.remove-btn{
+
+background:none;
+border:none;
+
+color:#ff5a5a;
+
+font-weight:600;
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+.remove-btn:hover{
+
+color:#ff2a2a;
+text-shadow:0 0 8px rgba(255,0,0,.4);
+
+}
+
+/* =================================
+   SUMMARY CARD
+================================= */
+
+.cart-summary{
+
+background:linear-gradient(145deg,#0b1a33,#081425);
+
+border-radius:18px;
+
+border:1px solid rgba(255,255,255,.05);
+
+padding:30px;
+
+position:sticky;
+top:110px;
+
+box-shadow:
+0 15px 45px rgba(0,0,0,.5),
+0 0 25px rgba(34,197,94,.08);
+
+transition:all .3s ease;
+
+}
+
+.cart-summary:hover{
+
+box-shadow:
+0 20px 60px rgba(0,0,0,.6),
+0 0 35px rgba(34,197,94,.18);
+
+transform:translateY(-3px);
+
+}
+
+.cart-summary h3{
+font-size:1.35rem;
+font-weight:700;
+margin-bottom:22px;
+letter-spacing:-0.3px;
+}
+
+/* =================================
+   SUMMARY ROWS
+================================= */
+
+.summary-row{
+
+display:flex;
+justify-content:space-between;
+
+padding:8px 0;
+
+font-size:.95rem;
+
+color:var(--color-text-muted);
+
+}
+
+.summary-total{
+
+display:flex;
+justify-content:space-between;
+
+font-size:1.25rem;
+font-weight:700;
+
+margin-top:18px;
+padding-top:18px;
+
+border-top:1px solid transparent;
+position:relative;
+
+color:var(--color-text-primary);
+
+}
+
+.summary-total::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:1px;
+
+background:linear-gradient(
+90deg,
+transparent,
+rgba(255,255,255,.12),
+transparent
+);
+}
+
+/* =================================
+   COUPON
+================================= */
+
+.coupon-input{
+
+width:100%;
+
+padding:12px 14px;
+
+margin-top:18px;
+
+border-radius:10px;
+
+border:1px solid rgba(255,255,255,.08);
+
+background:rgba(255,255,255,.02);
+
+color:var(--color-text-primary);
+
+font-size:.9rem;
+
+transition:
+border-color .2s ease,
+box-shadow .2s ease;
+
+}
+
+.coupon-input:focus{
+
+outline:none;
+
+border-color:var(--color-accent);
+
+box-shadow:
+0 0 0 2px rgba(34,197,94,.25),
+0 0 14px rgba(34,197,94,.15);
+
+}
+
+.apply-coupon{
+
+width:100%;
+
+margin-top:10px;
+
+padding:12px;
+
+border-radius:10px;
+
+border:1px solid rgba(34,197,94,.35);
+
+background:rgba(34,197,94,.06);
+
+color:var(--color-accent);
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:all .2s ease;
+
+}
+
+.apply-coupon:hover{
+
+transform:translateY(-2px);
+
+background:rgba(34,197,94,.12);
+
+box-shadow:0 0 16px rgba(34,197,94,.35);
+
+}
+
+/* =================================
+   CHECKOUT BUTTON
+================================= */
+
+.checkout-btn{
+
+width:100%;
+
+margin-top:18px;
+
+padding:15px;
+
+border:none;
+
+border-radius:12px;
+
+background:linear-gradient(135deg,#22c55e,#4ade80);
+
+color:#04130a;
+
+font-weight:700;
+font-size:15px;
+
+cursor:pointer;
+
+transition:
+transform .2s ease,
+box-shadow .2s ease;
+
+box-shadow:0 0 20px rgba(34,197,94,.35);
+
+}
+
+.checkout-btn:hover{
+
+transform:translateY(-3px);
+
+box-shadow:0 15px 40px rgba(34,197,94,.45);
+
+}
+
+/* =================================
+   SECURITY TEXT
+================================= */
+
+.secure-checkout{
+
+margin-top:14px;
+
+font-size:12px;
+
+color:var(--color-text-muted);
+
+text-align:center;
+
+display:flex;
+align-items:center;
+justify-content:center;
+gap:6px;
+
+}
+
+/* =================================
+   EMPTY CART
+================================= */
+
+.empty-cart{
+
+min-height:60vh;
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+gap:14px;
+
+text-align:center;
+
+}
+
+.browse-btn{
+
+padding:12px 24px;
+
+border-radius:10px;
+
+background:var(--color-accent);
+
+border:none;
+
+font-weight:600;
+
+cursor:pointer;
+
+}
+
+.browse-btn:hover{
+opacity:.9;
+}
+
+/* =================================
+   ANIMATIONS
+================================= */
+
+.cart-item.removing{
+opacity:0;
+transform:translateX(40px);
+transition:all .35s ease;
+}
+
+@keyframes pricePulse{
+
+0%{transform:scale(1)}
+50%{transform:scale(1.08)}
+100%{transform:scale(1)}
+
+}
+.stock-warning{
+
+margin-top:4px;
+
+font-size:.75rem;
+
+color:#facc15;
+
+font-weight:500;
+
+}
