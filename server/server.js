@@ -15,10 +15,7 @@ connectDB();
 // Middleware
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:5174",
-    ],
+    origin: true,
     credentials: true,
   })
 );
@@ -46,10 +43,10 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 
-app.use(errorHandler)
-
 const apiLimiter = require("./middleware/rateLimit.middleware")
 app.use("/api", apiLimiter)
+
+app.use(errorHandler)
 
 const wishlistRoutes = require("./routes/wishlist.routes")
 
