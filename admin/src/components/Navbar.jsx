@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { Bell, LogOut, Search } from "lucide-react";
 import "./AdminLayout.css";
 
 export default function Navbar() {
@@ -13,30 +14,29 @@ export default function Navbar() {
 
   return (
     <header className="navbar">
-
-      {/* Left Section (future search / page title) */}
       <div className="navbar-left">
-        <span className="navbar-title">Admin Dashboard</span>
+        <div className="search-box">
+          <Search size={16} className="search-icon" />
+          <input type="text" placeholder="Command Search..." />
+        </div>
       </div>
 
-      {/* Right Section */}
       <div className="navbar-right">
-
-        {/* Future notification icon */}
-        <span className="nav-icon">🔔</span>
-
-        {/* Admin name */}
-        <span className="admin-name">
-          👋 {adminName || "Admin"}
-        </span>
-
-        {/* Logout */}
-        <button className="logout-btn" onClick={logoutHandler}>
-          Logout
+        <button className="icon-btn">
+          <Bell size={20} />
+          <span className="notification-dot"></span>
         </button>
 
+        <div className="admin-profile">
+          <div className="admin-info">
+            <span className="admin-name">{adminName || "Administrator"}</span>
+            <span className="admin-role">Super Admin</span>
+          </div>
+          <button className="logout-minimal" onClick={logoutHandler} title="Logout">
+            <LogOut size={18} />
+          </button>
+        </div>
       </div>
-
     </header>
   );
 }

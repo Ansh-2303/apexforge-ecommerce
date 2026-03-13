@@ -1,140 +1,213 @@
-/* ADMIN LAYOUT */
+/* APEXFORGE COMMAND CENTER LAYOUT */
 
 .admin-layout {
   display: flex;
   min-height: 100vh;
-  background: #020617;
-  color: #e5e7eb;
-  font-family: Inter, system-ui, sans-serif;
+  background: var(--bg-deep); /* #040914 from our index.css */
+  color: var(--text-main);
+  overflow: hidden;
 }
 
-/* SIDEBAR */
-
-.sidebar {
-  width: 240px;
-  background: #081426;
-  border-right: 1px solid rgba(255,255,255,0.06);
-
-  padding: 24px 20px;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.sidebar .logo {
-  font-size: 20px;
-  font-weight: 700;
-  margin-bottom: 35px;
-}
-
-/* SIDEBAR LINKS */
-
-.sidebar nav {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
-
-.sidebar nav a {
-  text-decoration: none;
-  color: #9ca3af;
-
-  padding: 10px 12px;
-
-  border-radius: 8px;
-
-  font-size: 14px;
-
-  transition: all 0.2s ease;
-}
-
-.sidebar nav a:hover {
-  background: rgba(255,255,255,0.04);
-  color: white;
-}
-
-.sidebar nav a.active {
-  background: rgba(79,140,255,0.15);
-  color: #4f8cff;
+/* SIDEBAR WRAPPER */
+.sidebar-wrapper {
+  width: 260px;
+  background: rgba(255, 255, 255, 0.02);
+  border-right: 1px solid var(--glass-border);
+  backdrop-filter: var(--glass-blur);
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 100;
 }
 
 /* MAIN AREA */
-
 .admin-main {
   flex: 1;
   display: flex;
   flex-direction: column;
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
 }
 
-/* NAVBAR */
-
+/* NAVBAR UPGRADE */
+/* Note: These styles will apply if your Navbar component uses these classes */
 .navbar {
-  height: 64px;
-
+  height: 70px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  padding: 0 24px;
-
-  background: #071a32;
-
-  border-bottom: 1px solid rgba(255,255,255,0.06);
+  padding: 0 40px;
+  background: rgba(4, 9, 20, 0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--glass-border);
+  z-index: 90;
 }
 
-/* NAVBAR RIGHT */
-
-.navbar-right {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.admin-name {
-  font-size: 14px;
-  color: #d1d5db;
-}
-
-/* LOGOUT BUTTON */
-
-.logout-btn {
-  background: #ef4444;
-  border: none;
-
-  padding: 6px 12px;
-
-  border-radius: 6px;
-
-  font-size: 13px;
-
-  color: white;
-
-  cursor: pointer;
-
-  transition: background 0.2s ease;
-}
-
-.logout-btn:hover {
-  background: #dc2626;
-}
-
-/* CONTENT */
-
+/* CONTENT AREA */
 .admin-content {
   flex: 1;
-
-  padding: 28px;
-
+  padding: 40px;
   overflow-y: auto;
+  background: radial-gradient(circle at top right, rgba(34, 197, 94, 0.03), transparent);
 }
 
-/* SCROLLBAR */
+.content-container {
+  max-width: 1400px;
+  margin: 0 auto;
+}
 
+/* SCROLLBAR - Stealth Neon */
 .admin-content::-webkit-scrollbar {
-  width: 6px;
+  width: 5px;
+}
+
+.admin-content::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .admin-content::-webkit-scrollbar-thumb {
-  background: rgba(255,255,255,0.15);
+  background: var(--glass-border);
+  border-radius: 10px;
+  transition: var(--transition-smooth);
+}
+
+.admin-content::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-neon);
+  box-shadow: 0 0 10px var(--accent-glow);
+}
+
+/* SHARED LUX STATUS BADGES (Can be used anywhere in Admin) */
+.badge-premium {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 1px solid transparent;
+}
+
+.badge-success {
+  background: rgba(34, 197, 94, 0.1);
+  color: var(--accent-neon);
+  border-color: rgba(34, 197, 94, 0.2);
+  box-shadow: 0 0 10px rgba(34, 197, 94, 0.1);
+}
+/* LOGO */
+.sidebar-logo {
+  padding: 2rem 1.5rem;
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #fff;
+}
+
+.logo-accent {
+  color: var(--accent-neon);
+  margin-right: 2px;
+}
+
+/* SIDEBAR NAV */
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  padding: 0 1rem;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: 8px;
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.nav-link:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.active-link {
+  color: var(--accent-neon);
+  background: rgba(34, 197, 94, 0.08);
+  border-left: 2px solid var(--accent-neon);
+}
+
+.sidebar-footer {
+  margin-top: auto;
+  padding: 1.5rem;
+  font-size: 0.7rem;
+  color: var(--text-dim);
+}
+
+/* NAVBAR LUXURY */
+.search-box {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--glass-border);
+  padding: 8px 16px;
   border-radius: 6px;
+  gap: 10px;
+}
+
+.search-box input {
+  background: transparent;
+  border: none;
+  color: #fff;
+  outline: none;
+  font-size: 0.85rem;
+}
+
+.admin-profile {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding-left: 15px;
+  border-left: 1px solid var(--glass-border);
+}
+
+.admin-info {
+  display: flex;
+  flex-direction: column;
+  text-align: right;
+}
+
+.admin-role {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+}
+
+.logout-minimal {
+  background: transparent;
+  color: #ff4d4d;
+  opacity: 0.7;
+  transition: 0.2s;
+}
+
+.logout-minimal:hover {
+  opacity: 1;
+  transform: translateX(3px);
+}
+
+.icon-btn {
+  background: transparent;
+  color: var(--text-muted);
+  position: relative;
+}
+
+.notification-dot {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 6px;
+  height: 6px;
+  background: var(--accent-neon);
+  border-radius: 50%;
 }

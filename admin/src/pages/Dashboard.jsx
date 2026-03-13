@@ -1,450 +1,179 @@
 import { useEffect, useState } from "react";
 import AdminLayout from "../components/AdminLayout";
 import api from "../services/api";
+import { 
+  TrendingUp, Users, ShoppingCart, Package, 
+  AlertTriangle, CreditCard, ChevronRight 
+} from "lucide-react";
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  Tooltip,
-  CartesianGrid,
-  BarChart,
-  Bar,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell
+  LineChart, Line, XAxis, YAxis, Tooltip, 
+  CartesianGrid, BarChart, Bar, ResponsiveContainer,
+  PieChart, Pie, Cell
 } from "recharts";
-
 import "./Dashboard.css";
 
 export default function Dashboard() {
-
   const [stats, setStats] = useState({
-    totalRevenue: 0,
-    totalOrders: 0,
-    totalUsers: 0,
-    totalProducts: 0
+    totalRevenue: 0, totalOrders: 0, totalUsers: 0, totalProducts: 0
   });
-
-  const [topProducts, setTopProducts] = useState([]);
-  const [lowStockProducts, setLowStockProducts] = useState([]);
   const [salesData, setSalesData] = useState([]);
   const [orderStatusData, setOrderStatusData] = useState([]);
   const [recentOrders, setRecentOrders] = useState([]);
-  const [categoryRevenue, setCategoryRevenue] = useState([]);
-  const [productPerformance, setProductPerformance] = useState([]);
-  const [inventory, setInventory] = useState({
-  totalStock: 0,
-  lowStock: [],
-  outOfStock: []
-});
-const [topCustomers, setTopCustomers] = useState([]);
-
+  const [topProducts, setTopProducts] = useState([]);
+  const [inventory, setInventory] = useState({ totalStock: 0, lowStock: [], outOfStock: [] });
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-
-    const fetchStats = async () => {
+    const fetchDashboardData = async () => {
       try {
+        const [statsRes, salesRes, statusRes, recentRes, productsRes, inventoryRes] = await Promise.all([
+          api.get("/orders/admin/stats"),
+          api.get("/orders/admin/sales"),
+          api.get("/orders/admin/order-status"),
+          api.get("/orders/admin/recent-orders"),
+          api.get("/products"),
+          api.get("/products/admin/inventory")
+        ]);
 
-        const { data } = await api.get("/orders/admin/stats");
-        setStats(data);
-
-        const { data: products } = await api.get("/products");
-        const productList = products.products || [];
-
-        const top = [...productList]
+        setStats(statsRes.data);
+        setSalesData(salesRes.data.map(s => ({ name: s._id, revenue: s.revenue })));
+        setOrderStatusData(statusRes.data.map(s => ({ name: s._id, value: s.count })));
+        setRecentOrders(recentRes.data);
+        setInventory(inventoryRes.data);
+        
+        const top = [...(productsRes.data.products || [])]
           .sort((a, b) => (b.sold || 0) - (a.sold || 0))
           .slice(0, 5);
-
-        const low = productList.filter(p => (p.stock || 0) <= 5);
-
         setTopProducts(top);
-        setLowStockProducts(low);
-
-        const { data: sales } = await api.get("/orders/admin/sales");
-
-        const formattedSales = sales.map(s => ({
-          name: s._id,
-          revenue: s.revenue,
-          orders: s.orders
-        }));
-
-        setSalesData(formattedSales);
-
-        const { data: statusStats } = await api.get("/orders/admin/order-status");
-
-        const formattedStatus = statusStats.map(s => ({
-          name: s._id,
-          value: s.count
-        }));
-
-        setOrderStatusData(formattedStatus);
-
-        const { data: recent } = await api.get("/orders/admin/recent-orders");
-        setRecentOrders(recent);
-
-        const { data: category } = await api.get("/orders/admin/category-revenue");
-
-        const formattedCategory = category.map(c => ({
-          name: c._id,
-          revenue: c.revenue
-        }));
-
-        setCategoryRevenue(formattedCategory);
-
-        const { data: performance } = await api.get("/products/admin/performance");
-
-        const formattedPerformance = performance.map(p => ({
-          name: p.name,
-          unitsSold: p.unitsSold,
-          revenue: p.revenue
-        }));
-
-        setProductPerformance(formattedPerformance);
-        // Inventory Analytics
-const { data: inventoryData } = await api.get("/products/admin/inventory");
-setInventory(inventoryData);
-
-// Customer Analytics
-const { data: customers } = await api.get("/orders/admin/top-customers");
-
-setTopCustomers(customers);
 
       } catch (error) {
-        console.error("Dashboard error", error);
+        console.error("Dashboard Load Error:", error);
       } finally {
         setLoading(false);
       }
     };
-
-    fetchStats();
-
+    fetchDashboardData();
   }, []);
 
-  const chartOrdersData = [
-    { name: "Orders", value: stats.totalOrders }
-  ];
+  if (loading) return <AdminLayout><div className="loading-state">Initializing Command Center...</div></AdminLayout>;
 
   return (
-
     <AdminLayout>
-
       <div className="dashboard-header">
-        <h2>Dashboard Overview</h2>
-        <p>Business analytics and store performance</p>
+        <div>
+          <h1>Command Center</h1>
+          <p>Real-time system overview and performance metrics.</p>
+        </div>
+        <div className="system-status">
+          <span className="pulse-dot"></span> System Live
+        </div>
       </div>
 
-      {/* Stats Cards */}
-
+      {/* Primary Stats */}
       <div className="stats-grid">
-
-        <div className="stat-card">
-          <span className="stat-label">Total Revenue</span>
-          <h3>₹{stats.totalRevenue.toFixed(2)}</h3>
-        </div>
-
-        <div className="stat-card">
-          <span className="stat-label">Total Orders</span>
-          <h3>{stats.totalOrders}</h3>
-        </div>
-
-        <div className="stat-card">
-          <span className="stat-label">Total Customers</span>
-          <h3>{stats.totalUsers}</h3>
-        </div>
-
-        <div className="stat-card">
-          <span className="stat-label">Total Products</span>
-          <h3>{stats.totalProducts}</h3>
-        </div>
-
+        <StatCard label="Total Revenue" value={`₹${stats.totalRevenue.toLocaleString()}`} icon={<TrendingUp size={20}/>} trend="+12.5%" />
+        <StatCard label="Total Orders" value={stats.totalOrders} icon={<ShoppingCart size={20}/>} trend="+5.2%" />
+        <StatCard label="Total Customers" value={stats.totalUsers} icon={<Users size={20}/>} trend="+2.4%" />
+        <StatCard label="Active Inventory" value={inventory.totalStock} icon={<Package size={20}/>} />
       </div>
 
-      {/* Charts */}
-
-      <div className="charts-grid">
-
-        <div className="chart-card">
-          <h4>Revenue Overview</h4>
-
+      <div className="main-dashboard-grid">
+        {/* Revenue Chart */}
+        <div className="chart-container wide">
+          <div className="card-header">
+            <h3>Revenue Analytics</h3>
+            <CreditCard size={18} className="text-dim" />
+          </div>
           <ResponsiveContainer width="100%" height={300}>
             <LineChart data={salesData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
-              <XAxis dataKey="name" stroke="#9ca3af" />
-              <YAxis stroke="#9ca3af" />
-              <Tooltip />
-              <Line
-                type="monotone"
-                dataKey="revenue"
-                stroke="#4f8cff"
-                strokeWidth={3}
+              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.05)" vertical={false} />
+              <XAxis dataKey="name" stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
+              <YAxis stroke="#475569" fontSize={12} tickLine={false} axisLine={false} />
+              <Tooltip 
+                contentStyle={{ backgroundColor: '#040914', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px' }}
+                itemStyle={{ color: '#22C55E' }}
               />
+              <Line type="monotone" dataKey="revenue" stroke="#22C55E" strokeWidth={3} dot={{ r: 4, fill: '#22C55E' }} activeDot={{ r: 6 }} />
             </LineChart>
           </ResponsiveContainer>
-
         </div>
 
-        <div className="chart-card">
-          <h4>Orders Overview</h4>
-
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={chartOrdersData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
-              <XAxis dataKey="name" stroke="#9ca3af" />
-              <YAxis stroke="#9ca3af" />
-              <Tooltip />
-              <Bar dataKey="value" fill="#10b981" radius={[6,6,0,0]} />
-            </BarChart>
-          </ResponsiveContainer>
-
-        </div>
-
-        <div className="chart-card">
-          <h4>Order Status Distribution</h4>
-
-          <ResponsiveContainer width="100%" height={300}>
-            <PieChart>
-
-              <Pie
-                data={orderStatusData}
-                dataKey="value"
-                nameKey="name"
-                cx="50%"
-                cy="50%"
-                outerRadius={100}
-                label
-              >
-                {orderStatusData.map((entry, index) => (
-                  <Cell
-                    key={`cell-${index}`}
-                    fill={["#f59e0b","#3b82f6","#10b981","#6366f1","#ef4444"][index % 5]}
-                  />
-                ))}
-              </Pie>
-
-              <Tooltip />
-
-            </PieChart>
-          </ResponsiveContainer>
-
-        </div>
-
-        <div className="chart-card">
-          <h4>Revenue by Category</h4>
-
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={categoryRevenue}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
-              <XAxis dataKey="name" stroke="#9ca3af" />
-              <YAxis stroke="#9ca3af" />
-              <Tooltip />
-              <Bar dataKey="revenue" fill="#6366f1" radius={[6,6,0,0]} />
-            </BarChart>
-          </ResponsiveContainer>
-
-        </div>
-
-      </div>
-
-      {/* Insights */}
-
-      <div className="dashboard-insights">
-
-        <div className="insight-card">
-
-          <h3>Top Selling Products</h3>
-
-          {topProducts.length === 0 && (
-            <p className="insight-empty">No sales data yet</p>
-          )}
-
-          {topProducts.map(product => (
-            <div key={product._id} className="insight-row">
-              <span>{product.name}</span>
-              <span>Sold data coming soon</span>
-            </div>
-          ))}
-
-        </div>
-
-        <div className="insight-card">
-
-          <h3>Low Stock Alerts</h3>
-
-          {lowStockProducts.length === 0 && (
-            <p className="insight-empty">Stock levels are healthy</p>
-          )}
-
-          {lowStockProducts.map(product => (
-            <div key={product._id} className="insight-row">
-              <span>{product.name}</span>
-              <span className="low-stock">{product.stock}</span>
-            </div>
-          ))}
-
-        </div>
-
-      </div>
-
-      {/* Recent Orders */}
-
-      <div className="recent-orders-card">
-
-        <h3>Recent Orders</h3>
-
-        {recentOrders.length === 0 && (
-          <p className="insight-empty">No recent orders</p>
-        )}
-
-        {recentOrders.map(order => (
-
-          <div key={order._id} className="recent-order-row">
-
-            <div>
-              <strong>#{order._id.slice(-6)}</strong>
-            </div>
-
-            <div>
-              {order.user?.name || "Customer"}
-            </div>
-
-            <div>
-              ₹{order.totalPrice}
-            </div>
-
-            <div className={`status ${order.status}`}>
-              {order.status}
-            </div>
-
-            <div>
-              {new Date(order.createdAt).toLocaleDateString()}
-            </div>
-
+        {/* Top Products */}
+        <div className="chart-container">
+          <div className="card-header">
+            <h3>Top Performing Gear</h3>
+            <TrendingUp size={18} className="text-dim" />
           </div>
-
-        ))}
-
-      </div>
-
-      {/* Product Performance */}
-
-      <div className="product-performance-section">
-
-        <div className="chart-card">
-
-          <h4>Best Selling Products</h4>
-
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={productPerformance}>
-              <CartesianGrid strokeDasharray="3 3" stroke="rgba(255,255,255,0.08)" />
-              <XAxis dataKey="name" stroke="#9ca3af" />
-              <YAxis stroke="#9ca3af" />
-              <Tooltip />
-              <Bar dataKey="unitsSold" fill="#f59e0b" radius={[6,6,0,0]} />
-            </BarChart>
-          </ResponsiveContainer>
-
+          <div className="insight-list">
+            {topProducts.map((p) => (
+              <div key={p._id} className="insight-item">
+                <span className="item-name">{p.name}</span>
+                <span className="item-value text-neon">{p.sold || 0} Sold</span>
+              </div>
+            ))}
+          </div>
         </div>
 
-
-        <div className="chart-card">
-
-          <h4>Product Revenue Performance</h4>
-
-          <table className="product-performance-table">
-
-            <thead>
-              <tr>
-                <th>Product</th>
-                <th>Units Sold</th>
-                <th>Revenue</th>
-              </tr>
-            </thead>
-
-            <tbody>
-
-              {productPerformance.map((p, index) => (
-
-                <tr key={index}>
-                  <td>{p.name}</td>
-                  <td>{p.unitsSold}</td>
-                  <td>₹{p.revenue}</td>
+        {/* Recent Orders Table */}
+        <div className="chart-container wide">
+          <div className="card-header">
+            <h3>Recent Transactions</h3>
+            <button className="text-btn">View All <ChevronRight size={14}/></button>
+          </div>
+          <div className="table-responsive">
+            <table className="lux-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Amount</th>
+                  <th>Status</th>
                 </tr>
-
-              ))}
-
-            </tbody>
-
-          </table>
-
+              </thead>
+              <tbody>
+                {recentOrders.slice(0, 6).map(order => (
+                  <tr key={order._id}>
+                    <td className="text-dim">#{order._id.slice(-6)}</td>
+                    <td>{order.user?.name || "Guest"}</td>
+                    <td className="fw-bold">₹{order.totalPrice}</td>
+                    <td><span className={`badge-lux ${order.status}`}>{order.status}</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
         </div>
 
+        {/* Stock Alerts */}
+        <div className="chart-container">
+          <div className="card-header">
+            <h3>System Alerts</h3>
+            <AlertTriangle size={18} className="text-red" />
+          </div>
+          <div className="insight-list">
+            {inventory.lowStock.length === 0 && <p className="text-dim p-4">All systems nominal.</p>}
+            {inventory.lowStock.map((item, i) => (
+              <div key={i} className="insight-item alert">
+                <span>{item.product}</span>
+                <span className="badge-red">{item.stock} left</span>
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
-      {/* Inventory Intelligence */}
-
-<div className="inventory-section">
-
-  <div className="stat-card">
-    <span className="stat-label">Total Inventory Units</span>
-    <h3>{inventory.totalStock}</h3>
-  </div>
-
-  <div className="chart-card">
-
-    <h4>Low Stock Variants</h4>
-
-    {inventory.lowStock.map((item, index) => (
-      <div key={index} className="insight-row">
-        <span>{item.product}</span>
-        <span className="low-stock">{item.stock}</span>
-      </div>
-    ))}
-
-  </div>
-
-  <div className="chart-card">
-
-    <h4>Out Of Stock</h4>
-
-    {inventory.outOfStock.map((item, index) => (
-      <div key={index} className="insight-row">
-        <span>{item.product}</span>
-        <span className="low-stock">0</span>
-      </div>
-    ))}
-
-  </div>
-
-</div>
-{/* Top Customers */}
-
-<div className="top-customers-section">
-
-  <div className="chart-card">
-
-    <h4>Top Customers</h4>
-
-    {topCustomers.map((customer, index) => (
-
-      <div key={index} className="insight-row">
-
-        <span>{customer.name}</span>
-
-        <span>
-          {customer.totalOrders} orders • ₹{customer.totalSpent}
-        </span>
-
-      </div>
-
-    ))}
-
-  </div>
-
-</div>
-
     </AdminLayout>
+  );
+}
 
+function StatCard({ label, value, icon, trend }) {
+  return (
+    <div className="lux-stat-card">
+      <div className="stat-icon">{icon}</div>
+      <div className="stat-content">
+        <p className="stat-label">{label}</p>
+        <h3>{value}</h3>
+        {trend && <span className="stat-trend">{trend}</span>}
+      </div>
+    </div>
   );
 }
